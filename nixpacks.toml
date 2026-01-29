@@ -1,0 +1,5 @@
+[phases.setup]
+aptPkgs = ["tesseract-ocr", "tesseract-ocr-eng"]
+
+[start]
+cmd = "gunicorn app:app --bind 0.0.0.0:$PORT"

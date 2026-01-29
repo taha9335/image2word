@@ -1,0 +1,7 @@
+pillow
+pytesseract
+opencv-python-headless
+numpy
+python-docx
+flask
+gunicorn

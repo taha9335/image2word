@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; background:#f7f7f7; color:#222; }
+.container { max-width:680px; margin:40px auto; background:#fff; padding:24px; box-shadow:0 4px 14px rgba(0,0,0,0.08); }
+h1 { margin-top:0 }
+form { display:flex; gap:12px; align-items:center }
+input[type=file] { flex:1 }
+.note { margin-top:16px; color:#555 }
