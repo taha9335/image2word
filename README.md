@@ -1,26 +1,64 @@
-# Image → Word Converter (MVP)
+# Image to Word
 
-This project is a minimal prototype that converts a scanned document or image (JPG/PNG) into a formatted `.docx` file. It preserves basic paragraph structure and attempts simple detection of bold and italic text plus alignment heuristics.
+Convert scanned JPG or PNG images into editable Word documents using OCR. This Flask prototype combines Tesseract text recognition with basic paragraph and formatting heuristics.
 
-Quick start
+## Features
 
-1. Install system dependency: Tesseract OCR must be installed on your machine and available on PATH. On Windows install from: https://github.com/tesseract-ocr/tesseract
-2. Create a virtualenv and install Python packages:
+- Upload an image through a simple web form.
+- Extract text and generate a downloadable `.docx` file.
+- Attempt to preserve basic paragraph structure, alignment, bold, and italic styling.
+
+## Stack
+
+Python · Flask · Tesseract OCR · OpenCV · Pillow · python-docx
+
+## Run locally
+
+Install Tesseract OCR and make sure the `tesseract` command is available on your PATH. Then, from the repository root:
 
 ```bash
 python -m venv .venv
-source .venv/bin/activate   # or .venv\Scripts\activate on Windows
-pip install -r requirements.txt
 ```
 
-3. Run the Flask app:
+Activate the environment:
+
+```powershell
+# Windows PowerShell
+.venv\\Scripts\\Activate.ps1
+```
 
 ```bash
+# macOS / Linux
+source .venv/bin/activate
+```
+
+Install dependencies and start the app:
+
+```bash
+pip install -r requirements.txt
 python app.py
 ```
 
-4. Open http://127.0.0.1:5000/ and upload an image.
+Open `http://127.0.0.1:5000/`, choose a clear JPG or PNG scan, and select **Convert**. The response downloads as `converted.docx`.
 
-Notes and limitations
-- Bold/italic detection is heuristic-based (image stroke density and orientation). It works for clear, single-column documents but will not be perfect.
-- For production-quality formatting retainment, a richer OCR + layout analysis pipeline is recommended.
+## How it works
+
+1. Flask receives the image at `POST /convert`.
+2. `ocr_utils.py` processes the image and builds a Word document.
+3. The browser receives the generated file as a download.
+
+## Repository layout
+
+| Path | Purpose |
+| --- | --- |
+| `app.py` | Upload form, conversion route, and download response |
+| `ocr_utils.py` | OCR and document generation |
+| `static/` | Interface styles |
+| `requirements.txt` | Python dependencies |
+| `Procfile`, `render.yaml`, `nixpacks.toml`, `Aptfile` | Deployment configuration files |
+
+## Limitations
+
+Formatting is estimated, not reconstructed exactly. Clear single-column scans are the intended starting point; complex layouts and poor-quality images may need manual correction. Review extracted text before using the document.
+
+The development entry point binds to all interfaces with debug mode enabled. Public deployment needs upload validation, request-size limits, temporary-file cleanup, and production configuration. Included deployment files are not evidence of a verified live deployment.
